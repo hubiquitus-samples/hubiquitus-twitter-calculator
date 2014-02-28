@@ -6,13 +6,16 @@ var server = window.location.hostname;
 var endpoint = 'http://' + server + '/hubiquitus';
 
 Hubiquitus.logger.enable('*','debug');
+$()
 
 hubiquitus.on('connect', function() {
-    initCount();
+    initCalculator();
+    console.log('connected !');
 
 });
 hubiquitus.on('reconnect', function() {
-    initCount();
+    console.log('connected !');
+    initCalculator();
 
 });
 
@@ -25,32 +28,56 @@ hubiquitus.on('message', function(req) {
     }
 });
 
-$('#startCountingButton').click(function() {
-    initCount();
-});
-
 hubiquitus.connect(endpoint, {username:'twitcounterWeb'});
 
-displayDate = function() {
-    var currentTime = new Date();
-    var month = currentTime.getMonth() + 1;
-    if (month < 10) {
-        month = '0' + month;
-    }
-    var day = currentTime.getDate();
-    var year = currentTime.getFullYear();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
-    var seconds = currentTime.getSeconds();
-    if (minutes < 10) {minutes = '0' + minutes;}
-    if (seconds < 10) {seconds = '0' + seconds;}
-    var time = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
-    $('#currentDate').html(time);
+var initCalculator = function() {
+    hubiquitus.send('twitCalcBot',  {type:'initCalc'}, function(err, res) {
+        if (!err) {
+            console.log('RES REC !', res.content);
+            switch(res.content.mode) {
+                case 'realCalc' :
+                    $('input[name="bot-mode-choice"][value="choice-1"]').prop('checked', true);
+                    break;
+                case 'forceValue' :
+                    $('input[name="bot-mode-choice"][value="choice-2"]').prop('checked', true);
+                    break;
+                case 'forceAnswer' :
+                    $('input[name="bot-mode-choice"][value="choice-3"]').prop('checked', true);
+                    break;
+                case 'tweakValue' :
+                    $('input[name="bot-mode-choice"][value="choice-4"]').prop('checked', true);
+                    break;
+            }
+            $('textarea.customAnswer').val(res.content.sentence);
+        }
+    });
+
+    $(".loadingDiv").fadeOut(200, function() {
+        this.remove();
+        $(".calculator").slideDown();
+    });
+
 }
 
-initCount = function() {
-    counter = 0;
-    $('#count').html(counter);
-    hubiquitus.send('twitcounterBot',  {type:'initTwit', track:  $('#trackText').val()});
-    displayDate();
-}
+$('#launchConfig').click(function() {
+    var choiceVal = $('input[name=bot-mode-choice]:checked', '.calculator').val();
+    var content = "";
+    switch(choiceVal) {
+        case 'choice-1' :
+            content = {type:'realCalc'};
+            break;
+        case 'choice-2' :
+            var val = $('#forcedValue').val();
+            if (typeof(val) == 'number') {
+                content = {type:'forceValue', val: val};
+            }
+            break;
+        case 'choice-3' :
+            var op = $('#select-op').val();
+            var val = $('#op-value').val();
+            content = {type:'tweakValue', op: ""+op+val};
+            break;
+    }
+    hubiquitus.send('twitCalcBot', content, function(err, res) {
+    });
+});

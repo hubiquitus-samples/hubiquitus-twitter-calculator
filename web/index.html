@@ -7,6 +7,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     <title>Hubiquitus Twitter sample</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/chamoiskin.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="scripts/jquery-1.11.0.min.js"></script>
     <script src="scripts/hubiquitus.js"></script>
@@ -14,20 +15,56 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
 <body>
     <div class="mainDiv">
-        <h1>Twitter counter</h1>
-        <div class="row clear">
-            <input type="text" id="trackText" value="justin bieber"/>
-            <input type="submit" id="startCountingButton" class="fright" value="Start counting !"/>
-
+        <h1 class="h1 row">Twitter Calculator Tweaker</h1>
+        <div class="loadingDiv row">
+            <span>Loading...</span>
+            <img class="loadingGif" src="img/loading.gif">
         </div>
-        <div class="row">
-        </div>
-        <div class="row">
-            <p>Tweets tracked since <span id="currentDate"></span> :
-        </div>
-        <div class="row">
-            <span id="count">0</span></p>
-        </div>
+        <form class="calculator" id="calculator" style="display:none">
+            <div>&nbsp;
+                <b class="row">
+                    Choose a mode for the Hubiquitus Twitter Calculator :
+                </b>
+                <div class="row">
+                    <div class="custom-radio">
+                        <input type="radio" name="bot-mode-choice" id="bot-mode-choice-1"  value="choice-1" />
+                        <label for="bot-mode-choice-1" class="">Real calculator</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="custom-radio">
+                        <input type="radio" name="bot-mode-choice" id="bot-mode-choice-2"  value="choice-2" />
+                        <label for="bot-mode-choice-2" class="">Force value</label>
+                        <input type="text" class="fright" id="forcedValue" value="42"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="custom-radio">
+                        <input type="radio" name="bot-mode-choice" id="bot-mode-choice-3"  value="choice-3" />
+                        <label for="bot-mode-choice-3" class="">Modify result</label>
+                        <div class="fright">
+                            <span>*RES*</span>
+                            <div class="custom-select op-selector">
+                                <select name="select-choice" id="select-op">
+                                    <option value="+">+</option>
+                                    <option value="-">-</option>
+                                    <option value="*">*</option>
+                                    <option value="/">/</option>
+                                </select>
+                            </div>
+                            <input type="text" id="op-value" value="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <span>Set answer sentence</span>
+                    <textarea class="customAnswer fright" rows="4" maxlength="140">The answer is *RES* !</textarea>
+                </div>
+                <div class="row clear">
+                    <input type="submit" id="launchConfig" value="Change Bot config !"/>
+                </div>
+            </div>
+        </form>
     </div>
     <script src="scripts/hubiquitus-functions.js"></script>
 
