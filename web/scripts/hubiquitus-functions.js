@@ -62,12 +62,14 @@ var initCalculator = function() {
 $('#launchConfig').click(function() {
     var choiceVal = $('input[name=bot-mode-choice]:checked', '.calculator').val();
     var content = "";
+    console.log('send1', choiceVal);
+
     switch(choiceVal) {
         case 'choice-1' :
             content = {type:'realCalc'};
             break;
         case 'choice-2' :
-            var val = $('#forcedValue').val();
+            var val = parseInt($('#forcedValue').val(), 10);
             if (typeof(val) == 'number') {
                 content = {type:'forceValue', val: val};
             }
@@ -78,6 +80,7 @@ $('#launchConfig').click(function() {
             content = {type:'tweakValue', op: ""+op+val};
             break;
     }
+    console.log('send', content);
     hubiquitus.send('twitCalcBot', content, function(err, res) {
     });
 });

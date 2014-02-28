@@ -10,7 +10,7 @@ var botScreenName = 'HubiquitusCalc';
 var botMode = 'forceValue';
 var forcedValue = 0;
 var tweakOp = '';
-var answerSentence = "I'm calculating *OP* ... I think it's *RES* !";
+var answerSentence = "I'm calculating **OP** ... I think it's **RES** !";
 
 app.use('/twittercalc', express["static"](path.resolve(__dirname, 'web')));
 var httpServer = http.createServer(app);
@@ -21,10 +21,10 @@ gateway.start(httpServer, {
 });
 
 var T = new Twit({
-    consumer_key: "...",
-    consumer_secret: "...",
-    access_token: "...",
-    access_token_secret: "..."
+    consumer_key: "k9nYBjmGi266oWFEycZBw",
+    consumer_secret: "TAvW84eaRvrNiQibPCVIJNP35VYf6wpjW6cLtGiIA",
+    access_token: "2364419707-3E6bgH7o740wKVjiJLOZiA3Ml0O0SYW6hub64is",
+    access_token_secret: "Myh1igWjKN0yQAvQckUbXLEbOtD4KR4OYh9k1wNcrxKp2"
 });
 
 console.log("=====================================");
