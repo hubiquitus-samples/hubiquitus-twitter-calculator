@@ -1,0 +1,14 @@
+{
+  "name": "Twittest",
+  "description": "Test lib Twit",
+  "version": "0.0.1",
+  "dependencies": {
+    "hubiquitus-core": "0.8.*",
+    "hubiquitus-gateway": "0.8.*",
+    "twit": "1.1.12",
+    "express": "3.4.5"
+  },
+  "devDependencies": {
+    "coffee-script": "1.6.2"
+  }
+}
